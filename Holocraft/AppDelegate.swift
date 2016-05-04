@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let hcLearnVC = HCLearnViewController()
     let hcBuyVC = HCBuyViewController()
     
+    let takePhotoVC = HCTakePhotoViewController()
+    
     let createNav = UINavigationController()
     let viewNav = UINavigationController()
     let learnNav = UINavigationController()

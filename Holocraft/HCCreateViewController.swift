@@ -30,6 +30,14 @@ class HCCreateViewController: UIViewController {
         let views = ["take": takePhotoButton, "choose": choosePhotoButton]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][choose(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         takePhotoButton.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+        
+        takePhotoButton.addTarget(self, action: #selector(takePhotoBtnPressed), forControlEvents: .TouchUpInside)
+        
+    }
+    
+    func takePhotoBtnPressed() {
+        let takePhotoVC = HCTakePhotoViewController()
+        navigationController?.pushViewController(takePhotoVC, animated: true)
     }
 
 }
