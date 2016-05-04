@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */; };
 		F69CA1F81CD8442700B5F054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA1F71CD8442700B5F054 /* AppDelegate.swift */; };
 		F69CA2011CD8442700B5F054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F69CA2001CD8442700B5F054 /* Assets.xcassets */; };
 		F69CA2041CD8442700B5F054 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F69CA2021CD8442700B5F054 /* LaunchScreen.storyboard */; };
@@ -14,10 +15,10 @@
 		F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */; };
 		F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */; };
 		F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */; };
-		F69CA2141CD8481D00B5F054 /* HCRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA2131CD8481D00B5F054 /* HCRootViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCTakePhotoViewController.swift; sourceTree = "<group>"; };
 		F69CA1F41CD8442700B5F054 /* Holocraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holocraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F69CA1F71CD8442700B5F054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F69CA2001CD8442700B5F054 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -27,7 +28,6 @@
 		F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCViewHologramsViewController.swift; sourceTree = "<group>"; };
 		F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCLearnViewController.swift; sourceTree = "<group>"; };
 		F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCBuyViewController.swift; sourceTree = "<group>"; };
-		F69CA2131CD8481D00B5F054 /* HCRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCRootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +41,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F66629691CD97FC000D61821 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */,
+			);
+			name = Create;
+			sourceTree = "<group>";
+		};
 		F69CA1EB1CD8442700B5F054 = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				F69CA1F71CD8442700B5F054 /* AppDelegate.swift */,
-				F69CA2131CD8481D00B5F054 /* HCRootViewController.swift */,
+				F66629691CD97FC000D61821 /* Create */,
 				F69CA20B1CD845A700B5F054 /* HCCreateViewController.swift */,
 				F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */,
 				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
@@ -105,6 +113,7 @@
 				TargetAttributes = {
 					F69CA1F31CD8442700B5F054 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 3B3FT42G96;
 					};
 				};
 			};
@@ -144,9 +153,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F69CA1F81CD8442700B5F054 /* AppDelegate.swift in Sources */,
-				F69CA2141CD8481D00B5F054 /* HCRootViewController.swift in Sources */,
 				F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */,
 				F69CA20C1CD845A700B5F054 /* HCCreateViewController.swift in Sources */,
+				F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */,
 				F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */,
 				F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */,
 			);
@@ -253,10 +262,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Holocraft/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.laserclassroom.holocraftapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -264,10 +276,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Holocraft/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.laserclassroom.holocraftapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -290,6 +305,7 @@
 				F69CA20A1CD8442700B5F054 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
