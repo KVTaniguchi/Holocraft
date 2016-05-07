@@ -59,10 +59,10 @@ class HCTakePhotoViewController: UIViewController {
     func displayLayerDetection(frame: CGRect) {
         dispatch_async(dispatch_get_main_queue()) {
             self.testView.alpha = 1.0
-            self.testView.frame = frame
-            UIView.animateWithDuration(0.1, animations: { 
+            UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: { 
+                self.testView.frame = frame
                 self.testView.alpha = 0
-            })
+            }, completion: nil)
         }
     }
     
