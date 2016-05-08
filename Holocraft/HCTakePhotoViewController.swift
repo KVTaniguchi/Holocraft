@@ -16,6 +16,7 @@ class HCTakePhotoViewController: UIViewController {
     
     let cameraView = UIView()
     let takePictureButton = UIButton(type: .Custom)
+    let closeButton = UIButton(type: .Custom)
     
     let engine = CameraEngine()
     let testView = UIView()
@@ -27,6 +28,9 @@ class HCTakePhotoViewController: UIViewController {
     
     var screenWidth: CGFloat = 0.0
     var screenHeight: CGFloat = 0.0
+    
+    var videoURL: NSURL?
+    var videoCaptured: (NSURL? -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,18 +53,31 @@ class HCTakePhotoViewController: UIViewController {
             cameraView.addSubview(view)
         }
         
-        takePictureButton.setTitle("Take Picture", forState: .Normal)
+        takePictureButton.setTitle("Record", forState: .Normal)
+        takePictureButton.setTitle("Stop", forState: .Selected)
         takePictureButton.backgroundColor = UIColor.orangeColor()
+        takePictureButton.addTarget(self, action: #selector(recordButtonPressed), forControlEvents: .TouchUpInside)
+        closeButton.setTitle("Close", forState: .Normal)
+        closeButton.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
+        closeButton.backgroundColor = UIColor.darkGrayColor()
+        closeButton.addTarget(self, action: #selector(closeButtonPressed), forControlEvents: .TouchUpInside)
     
         cameraView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cameraView)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(closeButton)
         takePictureButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(takePictureButton)
-        let views = ["camera": cameraView, "btn": takePictureButton]
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[camera][btn(55)]|", options: [.AlignAllLeft, .AlignAllRight], metrics: nil, views: views))
+        let views = ["camera": cameraView, "record": takePictureButton, "close": closeButton]
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[camera][record(44)]|", options: [], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[camera]|", options: [], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[record][close(record)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         
         engine.blockCompletionFaceDetection = {[weak self] faceObject in
+            guard let startingTime = HCFaceFramesManager.shared.startTime else { return }
+            let hcFaceObj = HCFaceObject(recordedDate: NSDate(), faceObj: faceObject, baseStartDate: startingTime)
+            HCFaceFramesManager.shared.hcFaceObjects.append(hcFaceObj)
+            
             guard let weakSelf = self else { return }
             let frameFace = (faceObject as AVMetadataObject).bounds
             weakSelf.displayLayerDetection(frameFace)
@@ -70,6 +87,38 @@ class HCTakePhotoViewController: UIViewController {
         testView.layer.borderWidth = 1.0
         testView.layer.borderColor = UIColor.redColor().CGColor
         cameraView.addSubview(testView)
+    }
+    
+    func recordButtonPressed() {
+        takePictureButton.selected = !takePictureButton.selected
+        closeButton.enabled = false
+        
+        if takePictureButton.selected {
+            guard let url = CameraEngineFileManager.documentPath("video.mp4") else { return }
+            HCFaceFramesManager.shared.hcFaceObjects.removeAll()
+            HCFaceFramesManager.shared.startTime = NSDate()
+            engine.startRecordingVideo(url, blockCompletion: {[weak self] (url, error) -> (Void) in
+                guard let strongSelf = self else { return }
+                HCFaceFramesManager.shared.stopTime = NSDate()
+                strongSelf.videoURL = url
+                strongSelf.videoCaptured?(url)
+                
+                print("HC TIMER MANAGER :\(HCFaceFramesManager.shared.duration)")
+                print("HC OBJECT COUNT: \(HCFaceFramesManager.shared.hcFaceObjects.count)")
+                guard let first = HCFaceFramesManager.shared.hcFaceObjects.first, last = HCFaceFramesManager.shared.hcFaceObjects.last else { return }
+                print("FIRST TIME: \(first.date) LAST TIME \(last.date)")
+                
+                
+            })
+        }
+        else {
+            engine.stopRecordingVideo()
+            closeButton.enabled = true
+        }
+    }
+    
+    func closeButtonPressed() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func displayLayerDetection(hardFrame: CGRect) {
@@ -83,7 +132,6 @@ class HCTakePhotoViewController: UIViewController {
             UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
                 self.testView.frame = frame
                 self.testView.alpha = 0
-                
                 self.topMask.frame = CGRectMake(0, 0, self.screenWidth, frame.origin.y)
                 self.bottomMask.frame = CGRectMake(0, CGRectGetMaxY(frame), self.screenWidth, self.screenHeight - CGRectGetMaxY(frame))
                 self.leftMask.frame = CGRectMake(0, frame.origin.y, frame.origin.x, frame.height)
@@ -102,7 +150,4 @@ class HCTakePhotoViewController: UIViewController {
         cameraView.layer.insertSublayer(layer, atIndex: 0)
         cameraView.layer.masksToBounds = true
     }
-
-
-
 }

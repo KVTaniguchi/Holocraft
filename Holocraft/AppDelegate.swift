@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         learnNav.tabBarItem.title = "Learn"
         buyNav.tabBarItem.title = "Buy"
         
-        let controllers = [createNav, viewNav, learnNav, buyNav]
+        let controllers = [viewNav, createNav, learnNav, buyNav]
         tabBarController.viewControllers = controllers
         tabBarController.tabBar.translucent = false
         tabBarController.tabBar.tintColor = UIColor.blackColor()

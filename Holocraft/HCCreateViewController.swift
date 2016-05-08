@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class HCCreateViewController: UIViewController {
     
-    let takePhotoButton = UIButton(type: .Custom)
-    let choosePhotoButton = UIButton(type: .Custom)
+    let takeVideoButton = UIButton(type: .Custom)
+    let viewVideoButton = UIButton(type: .Custom)
     
-    let backgroundPhotoImageView = UIImageView()
-    let compositeImageView = UIImageView()
-    let takePhotoImageView = UIImageView()
+    let videoView = UIView()
     
-    let takePhotoVC = HCTakePhotoViewController()
+    let takeVideoVC = HCTakePhotoViewController()
+    var videoURL = NSURL()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,43 +26,49 @@ class HCCreateViewController: UIViewController {
         title = "Create"
         view.backgroundColor = UIColor.redColor()
         
-        takePhotoButton.setTitle(NSLocalizedString("Take Photo", comment: ""), forState: .Normal)
-        choosePhotoButton.setTitle(NSLocalizedString("Choose Photo", comment: ""), forState: .Normal)
+        takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
+        viewVideoButton.setTitle(NSLocalizedString("View Video", comment: ""), forState: .Normal)
+        takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
+        viewVideoButton.addTarget(self, action: #selector(showVideo), forControlEvents: .TouchUpInside)
         
-        for btn in [takePhotoButton, choosePhotoButton] {
-            btn.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(btn)
+        for button in [takeVideoButton, viewVideoButton] {
+            button.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
+            button.setTitleColor(view.tintColor, forState: .Normal)
         }
         
-        let views = ["take": takePhotoButton, "choose": choosePhotoButton, "back": backgroundPhotoImageView, "comp": compositeImageView, "takePhoto": takePhotoImageView]
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][choose(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
-        takePhotoButton.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
-        
-        takePhotoButton.addTarget(self, action: #selector(takePhotoBtnPressed), forControlEvents: .TouchUpInside)
-        
-        for imageView in [backgroundPhotoImageView, compositeImageView, takePhotoImageView] {
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(imageView)
+        let views = ["take": takeVideoButton, "view": viewVideoButton, "video": videoView]
+        for subView in views.values {
+            subView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(subView)
         }
         
-        backgroundPhotoImageView.image = UIImage(named: "photoStack")
-        takePhotoImageView.image = UIImage(named: "camera")
-        compositeImageView.image = UIImage(named: "editImage")
+        let offSet = (navigationController?.navigationBar.frame.height)! + UIApplication.sharedApplication().statusBarFrame.height
+        let metrics = ["offSet": offSet]
         
-        compositeImageView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[back(100)][comp(100)][takePhoto(100)]", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[back(100)]-100-|", options: [], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][view(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-offSet-[take][video]|", options: [], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[video]|", options: [], metrics: nil, views: views))
+        
+        takeVideoVC.videoCaptured = { vidURL in
+            guard let url = vidURL else { return }
+            self.videoURL = url
+        }
         
     }
     
-    func takePhotoBtnPressed() {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
-        presentViewController(takePhotoVC, animated: true, completion: nil)
-        takePhotoVC.takePictureButton.addTarget(self, action: #selector(picBtnPressed), forControlEvents: .TouchUpInside)
+        viewVideoButton.enabled = !HCFaceFramesManager.shared.hcFaceObjects.isEmpty
     }
     
-    func picBtnPressed() {
-//        takePhotoVC.gpuVideoCamera
+    func showVideo() {
+        let previewVC = HCVideoPreviewerVC(videoURL: self.videoURL)
+        presentViewController(previewVC, animated: true, completion: nil)
+    }
+    
+    func takeVideoBtnPressed() {
+        presentViewController(takeVideoVC, animated: true, completion: nil)
     }
 
 }
