@@ -15,7 +15,7 @@ class HCCreateViewController: UIViewController {
     let takeVideoButton = UIButton(type: .Custom)
     let viewVideoButton = UIButton(type: .Custom)
     
-    let videoView = UIView()
+    let videoImageView = UIImageView()
     
     let takeVideoVC = HCTakePhotoViewController()
     var videoURL = NSURL()
@@ -26,6 +26,9 @@ class HCCreateViewController: UIViewController {
         title = "Create"
         view.backgroundColor = UIColor.redColor()
         
+        videoImageView.contentMode = .ScaleAspectFit
+        videoImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        videoImageView.layer.borderWidth = 1.0
         takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
         viewVideoButton.setTitle(NSLocalizedString("View Video", comment: ""), forState: .Normal)
         takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
@@ -36,24 +39,33 @@ class HCCreateViewController: UIViewController {
             button.setTitleColor(view.tintColor, forState: .Normal)
         }
         
-        let views = ["take": takeVideoButton, "view": viewVideoButton, "video": videoView]
-        for subView in views.values {
+        let views = ["take": takeVideoButton, "view": viewVideoButton, "video": videoImageView]
+        for subView in [takeVideoButton, viewVideoButton, videoImageView] {
             subView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(subView)
         }
-        
-        let offSet = (navigationController?.navigationBar.frame.height)! + UIApplication.sharedApplication().statusBarFrame.height
-        let metrics = ["offSet": offSet]
-        
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][view(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: metrics, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-offSet-[take][video]|", options: [], metrics: metrics, views: views))
+
+        videoImageView.heightAnchor.constraintEqualToConstant(UIScreen.mainScreen().bounds.width).active = true
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][view(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[video]-15-[take(44)]-44-|", options: [], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[video]|", options: [], metrics: nil, views: views))
         
         takeVideoVC.videoCaptured = { vidURL in
             guard let url = vidURL else { return }
             self.videoURL = url
+            
+            let asset = AVURLAsset(URL: url)
+            let generator = AVAssetImageGenerator(asset: asset)
+            generator.appliesPreferredTrackTransform = true
+            do {
+                let cgImg = try generator.copyCGImageAtTime(CMTimeMake(0, 1), actualTime: nil)
+                let image = UIImage(CGImage: cgImg)
+                self.videoImageView.image = image
+            }
+            catch {
+                print("Warning: failed to fetch image from video")
+            }
         }
-        
     }
     
     override func viewDidAppear(animated: Bool) {

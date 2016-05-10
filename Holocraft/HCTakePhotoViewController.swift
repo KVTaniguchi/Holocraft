@@ -74,9 +74,11 @@ class HCTakePhotoViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[record][close(record)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         
         engine.blockCompletionFaceDetection = {[weak self] faceObject in
-            guard let startingTime = HCFaceFramesManager.shared.startTime else { return }
+            guard let startingTime = HCFaceFramesManager.shared.startTime, strongSelf = self else { return }
             let hcFaceObj = HCFaceObject(recordedDate: NSDate(), faceObj: faceObject, baseStartDate: startingTime)
-            HCFaceFramesManager.shared.hcFaceObjects.append(hcFaceObj)
+            if strongSelf.engine.isRecording {
+                HCFaceFramesManager.shared.hcFaceObjects.append(hcFaceObj)
+            }
             
             guard let weakSelf = self else { return }
             let frameFace = (faceObject as AVMetadataObject).bounds
@@ -102,13 +104,6 @@ class HCTakePhotoViewController: UIViewController {
                 HCFaceFramesManager.shared.stopTime = NSDate()
                 strongSelf.videoURL = url
                 strongSelf.videoCaptured?(url)
-                
-                print("HC TIMER MANAGER :\(HCFaceFramesManager.shared.duration)")
-                print("HC OBJECT COUNT: \(HCFaceFramesManager.shared.hcFaceObjects.count)")
-                guard let first = HCFaceFramesManager.shared.hcFaceObjects.first, last = HCFaceFramesManager.shared.hcFaceObjects.last else { return }
-                print("FIRST TIME: \(first.date) LAST TIME \(last.date)")
-                
-                
             })
         }
         else {
@@ -144,7 +139,6 @@ class HCTakePhotoViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         let layer = engine.previewLayer
-        
         layer.frame = cameraView.bounds
         
         cameraView.layer.insertSublayer(layer, atIndex: 0)

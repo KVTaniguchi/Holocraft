@@ -15,6 +15,7 @@ class HCFaceObject: NSObject {
     var date: NSDate?
     var relativeTimeIndex: Double = 0.0
     var callDate: NSDate?
+    var timeObject: NSTimer?
     
     init(recordedDate: NSDate, faceObj: AVMetadataFaceObject, baseStartDate: NSDate) {
         date = recordedDate
@@ -37,4 +38,6 @@ class HCFaceFramesManager: NSObject {
         guard let start = startTime, stop = stopTime else { return nil }
         return stop.timeIntervalSinceDate(start)
     }
+    
+    var timeObjects = [NSTimer: HCFaceObject]()
 }
