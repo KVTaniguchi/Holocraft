@@ -9,14 +9,15 @@
 import UIKit
 import AVKit
 import AVFoundation
+import CameraEngine
 
 class HCCreateViewController: UIViewController {
     
     let takeVideoButton = UIButton(type: .Custom)
     let viewVideoButton = UIButton(type: .Custom)
-    
+    let defaults = NSUserDefaults.standardUserDefaults()
     let videoImageView = UIImageView()
-    
+    let key = "com.Holocraft.videos"
     let takeVideoVC = HCTakePhotoViewController()
     var videoURL = NSURL()
 
@@ -25,6 +26,7 @@ class HCCreateViewController: UIViewController {
 
         title = "Create"
         view.backgroundColor = UIColor.redColor()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(save))
         
         videoImageView.contentMode = .ScaleAspectFit
         videoImageView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -53,7 +55,7 @@ class HCCreateViewController: UIViewController {
         takeVideoVC.videoCaptured = { vidURL in
             guard let url = vidURL else { return }
             self.videoURL = url
-            
+            print("AV ASSET URL \(url)")
             let asset = AVURLAsset(URL: url)
             let generator = AVAssetImageGenerator(asset: asset)
             generator.appliesPreferredTrackTransform = true
@@ -63,8 +65,19 @@ class HCCreateViewController: UIViewController {
                 self.videoImageView.image = image
             }
             catch {
-                print("Warning: failed to fetch image from video")
+                print("Warning: failed to fetch image from video err \(error) asdfasd")
             }
+        }
+
+    }
+    
+    func save() {
+        if var videoURLS = defaults.arrayForKey(key) {
+            videoURLS.append(videoURL.absoluteString)
+            defaults.setValue(videoURLS, forKey: key)
+        }
+        
+        CameraEngineFileManager.saveVideo(videoURL) { (success, error) -> (Void) in
         }
     }
     

@@ -70,9 +70,18 @@
 		F66629691CD97FC000D61821 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				F69CA20B1CD845A700B5F054 /* HCCreateViewController.swift */,
 				F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */,
 			);
 			name = Create;
+			sourceTree = "<group>";
+		};
+		F681160B1CE1685A00A9185D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		F69CA1EB1CD8442700B5F054 = {
@@ -97,9 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				F69CA1F71CD8442700B5F054 /* AppDelegate.swift */,
+				F681160B1CE1685A00A9185D /* View */,
 				F66629691CD97FC000D61821 /* Create */,
-				F69CA20B1CD845A700B5F054 /* HCCreateViewController.swift */,
-				F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */,
 				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
 				F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */,
 				F69CA2001CD8442700B5F054 /* Assets.xcassets */,

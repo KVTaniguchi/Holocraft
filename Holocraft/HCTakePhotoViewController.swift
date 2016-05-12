@@ -96,10 +96,10 @@ class HCTakePhotoViewController: UIViewController {
         closeButton.enabled = false
         
         if takePictureButton.selected {
-            guard let url = CameraEngineFileManager.documentPath("video.mp4") else { return }
+            guard let uuidUrl = CameraEngineFileManager.documentPath("holocraftVideo.mp4") else { return }
             HCFaceFramesManager.shared.hcFaceObjects.removeAll()
             HCFaceFramesManager.shared.startTime = NSDate()
-            engine.startRecordingVideo(url, blockCompletion: {[weak self] (url, error) -> (Void) in
+            engine.startRecordingVideo(uuidUrl, blockCompletion: {[weak self] (url, error) -> (Void) in
                 guard let strongSelf = self else { return }
                 HCFaceFramesManager.shared.stopTime = NSDate()
                 strongSelf.videoURL = url
