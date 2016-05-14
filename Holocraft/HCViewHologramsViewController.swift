@@ -29,6 +29,8 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             imagePicker.mediaTypes = allmedia
         }
         
+        
+        view.backgroundColor = UIColor.magentaColor()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
@@ -57,6 +59,31 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         // get the video file
         // launch player VC
+        
+        let player: HCHologramPlayerViewController
+        
+        guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
+            picker.dismissViewControllerAnimated(true, completion: nil)
+            return
+        }
+        
+        if mediaType == "public.movie" {
+            guard let movieURL = info[UIImagePickerControllerReferenceURL] as? NSURL else { return }
+            player = HCHologramPlayerViewController(movie: movieURL)
+        }
+        else {
+            let imageKeys = Set([UIImagePickerControllerEditedImage, UIImagePickerControllerOriginalImage, UIImagePickerControllerCropRect, UIImagePickerControllerMediaMetadata])
+            let allKeysSet = Set(info.keys)
+            let intersect = imageKeys.intersect(allKeysSet)
+            
+            guard let imageKey = intersect.first, image = info[imageKey] as? UIImage else { return }
+            // process the image for hologram
+            player = HCHologramPlayerViewController(img: image)
+        }
+        
+        picker.dismissViewControllerAnimated(true) {
+            self.presentViewController(player, animated: true, completion: nil)
+        }
     }
 }
 
