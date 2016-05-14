@@ -55,7 +55,6 @@ class HCCreateViewController: UIViewController {
         takeVideoVC.videoCaptured = { vidURL in
             guard let url = vidURL else { return }
             self.videoURL = url
-            print("AV ASSET URL \(url)")
             let asset = AVURLAsset(URL: url)
             let generator = AVAssetImageGenerator(asset: asset)
             generator.appliesPreferredTrackTransform = true
