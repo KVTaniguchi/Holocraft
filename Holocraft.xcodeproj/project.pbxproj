@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1693EC6503045658833A33A9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C724DE101724795A43920D9 /* Pods.framework */; };
+		F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */; };
 		F6424D311CDED965002485D5 /* HCFaceObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */; };
 		F6424D331CDEF3DD002485D5 /* HCVideoPreviewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */; };
 		F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		352A5351786C81640C18718E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7C724DE101724795A43920D9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCHologramPlayerViewController.swift; sourceTree = "<group>"; };
 		F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCFaceObjectManager.swift; sourceTree = "<group>"; };
 		F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCVideoPreviewerVC.swift; sourceTree = "<group>"; };
 		F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCTakePhotoViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */,
+				F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F69CA1F81CD8442700B5F054 /* AppDelegate.swift in Sources */,
+				F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */,
 				F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */,
 				F69CA20C1CD845A700B5F054 /* HCCreateViewController.swift in Sources */,
 				F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */,

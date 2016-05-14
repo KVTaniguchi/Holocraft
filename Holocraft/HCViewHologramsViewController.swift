@@ -23,6 +23,8 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "View"
+        
         if let allmedia = UIImagePickerController.availableMediaTypesForSourceType(.Camera) {
             imagePicker.mediaTypes = allmedia
         }
@@ -38,7 +40,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         stackView.alignment = .Fill
         stackView.distribution = .EqualCentering
         stackView.axis = .Vertical
-        stackView.spacing = 20
+        stackView.spacing = 50
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
@@ -52,6 +54,9 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // get the video file
+        // launch player VC
+    }
 }
 
