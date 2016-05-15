@@ -14,6 +14,6 @@ class HCBuyViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Buy"
-        view.backgroundColor = UIColor.purpleColor()
+        view.backgroundColor = UIColor(red: 170/255, green: 121/255, blue: 57/255, alpha: 1.0)
     }
 }

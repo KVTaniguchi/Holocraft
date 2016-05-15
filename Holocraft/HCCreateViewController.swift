@@ -21,6 +21,13 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     var videoURL = NSURL()
     
     let imageController = UIImagePickerController()
+    
+    let createYourOwnLabel = UILabel()
+    let createDetailText = UILabel()
+    let showMeHowButton = UIButton()
+    let startCreatingNowButton = UIButton()
+    let dontShowThisAgainButton = UIButton()
+    let xCloseButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +40,15 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         imageController.delegate = self
 
         title = "Create"
-        view.backgroundColor = UIColor.redColor()
+        view.backgroundColor = UIColor(red: 170/255, green: 142/255, blue: 57/255, alpha: 1.0)
         
         videoImageView.contentMode = .ScaleAspectFit
         takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
         viewVideoButton.setTitle(NSLocalizedString("View Video", comment: ""), forState: .Normal)
+        takeVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
         takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
         viewVideoButton.addTarget(self, action: #selector(showVideo), forControlEvents: .TouchUpInside)
+        viewVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
         
         for button in [takeVideoButton, viewVideoButton] {
             button.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
@@ -53,10 +62,9 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         }
 
         videoImageView.heightAnchor.constraintEqualToConstant(UIScreen.mainScreen().bounds.width).active = true
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[take][view(take)]|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[take]-[view(take)]-|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[video]-15-[take(44)]-44-|", options: [], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[video]|", options: [], metrics: nil, views: views))
-        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {

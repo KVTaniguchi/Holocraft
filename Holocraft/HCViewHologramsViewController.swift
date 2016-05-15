@@ -16,6 +16,7 @@ import Photos
 class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let chooseImagesFromPhotoLibButton = UIButton()
+    let instructionalLabel = UILabel()
     
     let imagePicker = UIImagePickerController()
     
@@ -28,14 +29,16 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             imagePicker.mediaTypes = allmedia
         }
         
-        view.backgroundColor = UIColor.magentaColor()
+        view.backgroundColor = UIColor(red: 52/255, green: 52/255, blue: 119/255, alpha: 1.0)
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
         
+        
         chooseImagesFromPhotoLibButton.setTitle("Choose Video", forState: .Normal)
-        chooseImagesFromPhotoLibButton.setTitleColor(view.tintColor, forState: .Normal)
+        chooseImagesFromPhotoLibButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+        chooseImagesFromPhotoLibButton.backgroundColor = UIColor.darkGrayColor()
         
         let stackView = UIStackView(arrangedSubviews: [chooseImagesFromPhotoLibButton])
         stackView.alignment = .Fill

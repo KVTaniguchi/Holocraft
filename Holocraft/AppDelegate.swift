@@ -39,6 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         learnNav.tabBarItem.title = "Learn"
         buyNav.tabBarItem.title = "Buy"
         
+        createNav.tabBarItem.image = UIImage(named: "old_time_camera-32")
+        viewNav.tabBarItem.image = UIImage(named: "stack_of_photos-32")
+        learnNav.tabBarItem.image = UIImage(named: "bookmark-32")
+        buyNav.tabBarItem.image = UIImage(named: "price_tag-32")
+        
         let controllers = [viewNav, createNav, learnNav, buyNav]
         tabBarController.viewControllers = controllers
         tabBarController.tabBar.translucent = false
