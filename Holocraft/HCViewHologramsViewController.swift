@@ -29,7 +29,6 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             imagePicker.mediaTypes = allmedia
         }
         
-        
         view.backgroundColor = UIColor.magentaColor()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true

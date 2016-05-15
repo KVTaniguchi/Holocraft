@@ -1,0 +1,6 @@
+framework module VideoLoopView {
+  umbrella header "VideoLoopView-umbrella.h"
+
+  export *
+  module * { export * }
+}

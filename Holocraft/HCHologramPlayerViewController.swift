@@ -21,6 +21,10 @@ class HCHologramPlayerViewController: UIViewController {
     var bottomView: VideoLoopView?
     
     let closeButton = UIButton()
+    let filterButton = UIButton()
+    
+    var gpuMovieFile: GPUImageMovie?
+    var currentFilter: GPUImageFilter?
     
     convenience init(img: UIImage) {
         self.init()
@@ -30,6 +34,8 @@ class HCHologramPlayerViewController: UIViewController {
     
     convenience init(movie: NSURL) {
         self.init()
+        
+        gpuMovieFile = GPUImageMovie(URL: movie)
         
         movieURL = movie
     }
@@ -42,16 +48,21 @@ class HCHologramPlayerViewController: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(closeButton)
         closeButton.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
-        closeButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 40).active = true
+        closeButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: 40).active = true
         closeButton.hidden = true
+        
+        filterButton.setTitle("Apply a Filter", forState: .Normal)
+        filterButton.addTarget(self, action: #selector(filterButtonPressed), forControlEvents: .TouchUpInside)
+        filterButton.translatesAutoresizingMaskIntoConstraints = false
+        filterButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
+        filterButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
         
         guard let url = movieURL else {
             setUpImageViews()
             return }
         
-        
-//        let gpuMovieFile = GPUImageMovie(URL: url)
-//        gpuMovieFile.shouldRepeat = true
+        let gpuMovieFile = GPUImageMovie(URL: url)
+        gpuMovieFile.shouldRepeat = true
 //        let testFilter = GPUImageSobelEdgeDetectionFilter()
 //        gpuMovieFile.addTarget(testFilter)
 //        let filteredImageView = GPUImageView()
@@ -105,6 +116,23 @@ class HCHologramPlayerViewController: UIViewController {
     }
     
     func setUpImageViews()  {
+        
+    }
+    
+    func filterButtonPressed() {
+        let filterController = HCFiltermanager()
+        presentViewController(filterController, animated: true, completion: nil)
+        
+        filterController.filterSelectedClosure = {[weak self] filter in
+            guard let strongSelf = self else { return }
+            strongSelf.gpuMovieFile?.addTarget(filter)
+            
+            // remove current filter from all targets
+            // add all views to filter as target
+        }
+    }
+    
+    func applySelectedFilter() {
         
     }
     

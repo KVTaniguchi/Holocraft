@@ -11,6 +11,7 @@
 		F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */; };
 		F6424D311CDED965002485D5 /* HCFaceObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */; };
 		F6424D331CDEF3DD002485D5 /* HCVideoPreviewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */; };
+		F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */; };
 		F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */; };
 		F69CA1F81CD8442700B5F054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA1F71CD8442700B5F054 /* AppDelegate.swift */; };
 		F69CA2011CD8442700B5F054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F69CA2001CD8442700B5F054 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCHologramPlayerViewController.swift; sourceTree = "<group>"; };
 		F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCFaceObjectManager.swift; sourceTree = "<group>"; };
 		F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCVideoPreviewerVC.swift; sourceTree = "<group>"; };
+		F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCFiltermanager.swift; sourceTree = "<group>"; };
 		F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCTakePhotoViewController.swift; sourceTree = "<group>"; };
 		F69CA1F41CD8442700B5F054 /* Holocraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holocraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F69CA1F71CD8442700B5F054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				F69CA2051CD8442700B5F054 /* Info.plist */,
 				F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */,
 				F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */,
+				F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */,
 			);
 			path = Holocraft;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */,
 				F6424D311CDED965002485D5 /* HCFaceObjectManager.swift in Sources */,
 				F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */,
+				F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */,
 				F6424D331CDEF3DD002485D5 /* HCVideoPreviewerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
