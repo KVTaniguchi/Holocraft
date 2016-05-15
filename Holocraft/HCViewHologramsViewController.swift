@@ -10,7 +10,6 @@ import UIKit
 import AVKit
 import AVFoundation
 import CameraEngine
-import CameraManager
 import Photos
 
 class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
