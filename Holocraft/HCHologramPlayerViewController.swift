@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import VideoLoopView
 
 class HCHologramPlayerViewController: UIViewController {
     
     private var image: UIImage?
     private var movieURL: NSURL?
     
-    let leftView = UIView()
-    let rightView = UIView()
-    let topView = UIView()
-    let bottomView = UIView()
-    let centerView = UIView()
+    var leftView: VideoLoopView?
+    var rightView: VideoLoopView?
+    var topView: VideoLoopView?
+    var bottomView: VideoLoopView?
     
     let closeButton = UIButton()
     
@@ -44,15 +44,27 @@ class HCHologramPlayerViewController: UIViewController {
         closeButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 40).active = true
         closeButton.hidden = true
         
+        guard let url = movieURL else { return }
+        leftView = VideoLoopView(videoUrl: url)
+        rightView = VideoLoopView(videoUrl: url)
+        topView = VideoLoopView(videoUrl: url)
+        bottomView = VideoLoopView(videoUrl: url)
         let layoutGuide = UILayoutGuide()
         view.addLayoutGuide(layoutGuide)
-        let views = ["left": leftView, "right": rightView, "top": topView, "bot": bottomView, "guide": layoutGuide]
+        
+        guard let left = leftView, right = rightView, top = topView, bottom = bottomView else { return }
+        
+        left.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI) / 2.0, 0, 0, 1), -1, -1, 1);
+        right.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI) / 2.0, 0, 0, 1), 1, 1, 1);
+        bottom.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI), 0, 0, 1), 1, 1, 1);
+        
+        let views = ["left": left, "right": right, "top": top, "bot": bottom, "guide": layoutGuide]
         
         let horizontalGuideWidth = UIScreen.mainScreen().bounds.width - 200
         let verticalConstant = horizontalGuideWidth
         let metrics = ["imgH": 100, "vertPadding": verticalConstant]
         
-        for videoView in [leftView, rightView, topView, bottomView] {
+        for videoView in [left, right, top, bottom] {
             videoView.backgroundColor = UIColor.orangeColor()
             videoView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(videoView)
@@ -63,10 +75,10 @@ class HCHologramPlayerViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[left(imgH)][guide][right(imgH)]|", options: [.AlignAllCenterY], metrics: metrics, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(vertPadding)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
         
-        for view in [leftView, rightView] {
+        for view in [left, right] {
             view.heightAnchor.constraintEqualToConstant(60).active = true
         }
-        for view in [topView, bottomView] {
+        for view in [top, bottom] {
             view.widthAnchor.constraintEqualToConstant(60).active = true
         }
     }
