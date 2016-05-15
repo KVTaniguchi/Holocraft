@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CameraEngine
 
 import GPUImage
 
@@ -16,7 +17,6 @@ class HCTakePhotoViewController: UIViewController {
     var faceView = UIView()
     
     let cameraView = GPUImageView()
-    var movieWriter: GPUImageMovieWriter?
     let takePictureButton = UIButton(type: .Custom)
     let closeButton = UIButton(type: .Custom)
     
@@ -35,12 +35,17 @@ class HCTakePhotoViewController: UIViewController {
     
     let gpuCamera = GPUImageVideoCamera(sessionPreset: AVCaptureSessionPreset640x480, cameraPosition: .Front)
     
+    let testFilter = GPUImageSobelEdgeDetectionFilter()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         gpuCamera.outputImageOrientation = .Portrait
+        gpuCamera.addTarget(testFilter)
         gpuCamera.addTarget(cameraView)
+        testFilter.addTarget(cameraView)
+        
         
         screenWidth = UIScreen.mainScreen().bounds.width
         screenHeight = UIScreen.mainScreen().bounds.height
@@ -79,26 +84,17 @@ class HCTakePhotoViewController: UIViewController {
         takePictureButton.selected = !takePictureButton.selected
         closeButton.enabled = false
         
+        guard let url = CameraEngineFileManager.documentPath("video.mp4") else {
+            return
+        }
+        
         if takePictureButton.selected {
             
-            
-            
-//            movieWriter = GPUImageMovieWriter(
-            
-//            guard let uuidUrl = CameraEngineFileManager.documentPath("holocraftVideo.mp4") else { return }
-//            HCFaceFramesManager.shared.hcFaceObjects.removeAll()
-//            HCFaceFramesManager.shared.startTime = NSDate()
-//            engine.startRecordingVideo(uuidUrl, blockCompletion: {[weak self] (url, error) -> (Void) in
-//                guard let strongSelf = self else { return }
-//                HCFaceFramesManager.shared.stopTime = NSDate()
-//                strongSelf.videoURL = url
-//                strongSelf.videoCaptured?(url)
-//            })
         }
         else {
-//            engine.stopRecordingVideo()
             
             closeButton.enabled = true
+            
         }
     }
     

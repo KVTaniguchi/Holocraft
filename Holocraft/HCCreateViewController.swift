@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import CameraEngine
 
-class HCCreateViewController: UIViewController {
+class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let takeVideoButton = UIButton(type: .Custom)
     let viewVideoButton = UIButton(type: .Custom)
@@ -20,13 +20,21 @@ class HCCreateViewController: UIViewController {
     let key = "com.Holocraft.videos"
     let takeVideoVC = HCTakePhotoViewController()
     var videoURL = NSURL()
+    
+    let imageController = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageController.sourceType = .Camera
+        if let allmedia = UIImagePickerController.availableMediaTypesForSourceType(.Camera) {
+            imageController.mediaTypes = allmedia
+        }
+        imageController.allowsEditing = true
+        imageController.delegate = self
 
         title = "Create"
         view.backgroundColor = UIColor.redColor()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(save))
         
         videoImageView.contentMode = .ScaleAspectFit
         videoImageView.layer.borderColor = UIColor.whiteColor().CGColor
@@ -52,32 +60,50 @@ class HCCreateViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[video]-15-[take(44)]-44-|", options: [], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[video]|", options: [], metrics: nil, views: views))
         
-        takeVideoVC.videoCaptured = { vidURL in
-            guard let url = vidURL else { return }
-            self.videoURL = url
-            let asset = AVURLAsset(URL: url)
-            let generator = AVAssetImageGenerator(asset: asset)
-            generator.appliesPreferredTrackTransform = true
-            do {
-                let cgImg = try generator.copyCGImageAtTime(CMTimeMake(0, 1), actualTime: nil)
-                let image = UIImage(CGImage: cgImg)
-                self.videoImageView.image = image
-            }
-            catch {
-                print("Warning: failed to fetch image from video err \(error) asdfasd")
-            }
-        }
-
     }
     
-    func save() {
-        if var videoURLS = defaults.arrayForKey(key) {
-            videoURLS.append(videoURL.absoluteString)
-            defaults.setValue(videoURLS, forKey: key)
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print(info)
+        
+        guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
+            dismissViewControllerAnimated(true, completion: nil)
+            return
         }
         
-        CameraEngineFileManager.saveVideo(videoURL) { (success, error) -> (Void) in
+        if mediaType == "public.movie" {
+            guard let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL else { return }
+            videoURL = movieURL
+            print(movieURL)
+            CameraEngineFileManager.saveVideo(movieURL, blockCompletion: { (success, error) -> (Void) in
+                let asset = AVURLAsset(URL: movieURL)
+                let generator = AVAssetImageGenerator(asset: asset)
+                generator.appliesPreferredTrackTransform = true
+                do {
+                    let cgImg = try generator.copyCGImageAtTime(CMTimeMake(0, 1), actualTime: nil)
+                    let image = UIImage(CGImage: cgImg)
+                    self.videoImageView.image = image
+                }
+                catch {
+                    print("Warning: failed to fetch image from video err \(error) asdfasd")
+                }
+            })
         }
+        else {
+            if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+                CameraEngineFileManager.savePhoto(editedImage, blockCompletion: { (success, error) -> (Void) in
+                    self.videoImageView.image = editedImage
+                })
+                return
+            }
+            if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                CameraEngineFileManager.savePhoto(originalImage, blockCompletion: { (success, error) -> (Void) in
+                    self.videoImageView.image = originalImage
+                })
+                return
+            }
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -87,12 +113,12 @@ class HCCreateViewController: UIViewController {
     }
     
     func showVideo() {
-        let previewVC = HCVideoPreviewerVC(videoURL: self.videoURL)
-        presentViewController(previewVC, animated: true, completion: nil)
+        let player = HCHologramPlayerViewController(movie: videoURL)
+        presentViewController(player, animated: true, completion: nil)
     }
     
     func takeVideoBtnPressed() {
-        presentViewController(takeVideoVC, animated: true, completion: nil)
+        presentViewController(imageController, animated: true, completion: nil)
     }
 
 }

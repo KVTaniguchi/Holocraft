@@ -8,6 +8,7 @@
 
 import UIKit
 import VideoLoopView
+import GPUImage
 
 class HCHologramPlayerViewController: UIViewController {
     
@@ -44,7 +45,27 @@ class HCHologramPlayerViewController: UIViewController {
         closeButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 40).active = true
         closeButton.hidden = true
         
-        guard let url = movieURL else { return }
+        guard let url = movieURL else {
+            setUpImageViews()
+            return }
+        
+        
+//        let gpuMovieFile = GPUImageMovie(URL: url)
+//        gpuMovieFile.shouldRepeat = true
+//        let testFilter = GPUImageSobelEdgeDetectionFilter()
+//        gpuMovieFile.addTarget(testFilter)
+//        let filteredImageView = GPUImageView()
+//        testFilter.addTarget(filteredImageView)
+//        filteredImageView.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(filteredImageView)
+//        filteredImageView.widthAnchor.constraintEqualToConstant(60).active = true
+//        filteredImageView.heightAnchor.constraintEqualToConstant(100).active = true
+//        filteredImageView.topAnchor.constraintEqualToAnchor(view.topAnchor).active = true
+//        filteredImageView.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
+//        
+//        gpuMovieFile.startProcessing()
+        
+        
         leftView = VideoLoopView(videoUrl: url)
         rightView = VideoLoopView(videoUrl: url)
         topView = VideoLoopView(videoUrl: url)
@@ -81,6 +102,10 @@ class HCHologramPlayerViewController: UIViewController {
         for view in [top, bottom] {
             view.widthAnchor.constraintEqualToConstant(60).active = true
         }
+    }
+    
+    func setUpImageViews()  {
+        
     }
     
     override func viewDidAppear(animated: Bool) {

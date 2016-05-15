@@ -57,8 +57,6 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        // get the video file
-        // launch player VC
         
         let player: HCHologramPlayerViewController
         
