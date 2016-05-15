@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '4B45EFFE85E2281D6E023331'
+               BlueprintIdentifier = '4DA4762E282F99C58CD4F3BA'
                BlueprintName = 'CameraEngine'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'CameraEngine.framework'>

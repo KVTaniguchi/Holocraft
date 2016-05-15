@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import VideoLoopView
 import GPUImage
 
 class HCHologramPlayerViewController: UIViewController {
@@ -15,10 +14,10 @@ class HCHologramPlayerViewController: UIViewController {
     private var image: UIImage?
     private var movieURL: NSURL?
     
-    var leftView: VideoLoopView?
-    var rightView: VideoLoopView?
-    var topView: VideoLoopView?
-    var bottomView: VideoLoopView?
+    var leftView = GPUImageView()
+    var rightView = GPUImageView()
+    var topView = GPUImageView()
+    var bottomView = GPUImageView()
     
     let closeButton = UIButton()
     let filterButton = UIButton()
@@ -43,60 +42,57 @@ class HCHologramPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = UIColor.blackColor()
+        
+        for btn in [closeButton, filterButton] {
+            btn.translatesAutoresizingMaskIntoConstraints = false
+            btn.setTitleColor(view.tintColor, forState: .Normal)
+            btn.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+            view.addSubview(btn)
+        }
+        
         closeButton.setTitle("Close", forState: .Normal)
         closeButton.addTarget(self, action: #selector(closeButtonPressed), forControlEvents: .TouchUpInside)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(closeButton)
-        closeButton.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
-        closeButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: 40).active = true
-        closeButton.hidden = true
+        closeButton.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant:  20).active = true
+        closeButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -20).active = true
         
         filterButton.setTitle("Apply a Filter", forState: .Normal)
         filterButton.addTarget(self, action: #selector(filterButtonPressed), forControlEvents: .TouchUpInside)
-        filterButton.translatesAutoresizingMaskIntoConstraints = false
-        filterButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
-        filterButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
+        filterButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -20).active = true
+        filterButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: -20).active = true
         
         guard let url = movieURL else {
             setUpImageViews()
             return }
         
-        let gpuMovieFile = GPUImageMovie(URL: url)
-        gpuMovieFile.shouldRepeat = true
-//        let testFilter = GPUImageSobelEdgeDetectionFilter()
-//        gpuMovieFile.addTarget(testFilter)
-//        let filteredImageView = GPUImageView()
-//        testFilter.addTarget(filteredImageView)
-//        filteredImageView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(filteredImageView)
-//        filteredImageView.widthAnchor.constraintEqualToConstant(60).active = true
-//        filteredImageView.heightAnchor.constraintEqualToConstant(100).active = true
-//        filteredImageView.topAnchor.constraintEqualToAnchor(view.topAnchor).active = true
-//        filteredImageView.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
-//        
-//        gpuMovieFile.startProcessing()
+        gpuMovieFile = GPUImageMovie(URL: url)
+        gpuMovieFile?.shouldRepeat = true
+        let defaultFilter = GPUImageFilter()
+        currentFilter = defaultFilter
+        gpuMovieFile?.addTarget(defaultFilter)
+        for gpuView in [leftView, rightView, topView, bottomView] {
+            gpuView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+            defaultFilter.addTarget(gpuView)
+        }
+        
+        gpuMovieFile?.startProcessing()
         
         
-        leftView = VideoLoopView(videoUrl: url)
-        rightView = VideoLoopView(videoUrl: url)
-        topView = VideoLoopView(videoUrl: url)
-        bottomView = VideoLoopView(videoUrl: url)
         let layoutGuide = UILayoutGuide()
         view.addLayoutGuide(layoutGuide)
         
-        guard let left = leftView, right = rightView, top = topView, bottom = bottomView else { return }
+        rightView.rotate(angle: 180)
+        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+        bottomView.rotate(angle: 180)
+        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
         
-        left.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI) / 2.0, 0, 0, 1), -1, -1, 1);
-        right.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI) / 2.0, 0, 0, 1), 1, 1, 1);
-        bottom.playerLayer.transform = CATransform3DScale(CATransform3DMakeRotation(CGFloat(M_PI), 0, 0, 1), 1, 1, 1);
-        
-        let views = ["left": left, "right": right, "top": top, "bot": bottom, "guide": layoutGuide]
+        let views = ["left": leftView, "right": rightView, "top": topView, "bot": bottomView, "guide": layoutGuide]
         
         let horizontalGuideWidth = UIScreen.mainScreen().bounds.width - 200
         let verticalConstant = horizontalGuideWidth
         let metrics = ["imgH": 100, "vertPadding": verticalConstant]
         
-        for videoView in [left, right, top, bottom] {
+        for videoView in [leftView, rightView, topView, bottomView] {
             videoView.backgroundColor = UIColor.orangeColor()
             videoView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(videoView)
@@ -107,10 +103,10 @@ class HCHologramPlayerViewController: UIViewController {
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[left(imgH)][guide][right(imgH)]|", options: [.AlignAllCenterY], metrics: metrics, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(vertPadding)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
         
-        for view in [left, right] {
+        for view in [leftView, rightView] {
             view.heightAnchor.constraintEqualToConstant(60).active = true
         }
-        for view in [top, bottom] {
+        for view in [topView, bottomView] {
             view.widthAnchor.constraintEqualToConstant(60).active = true
         }
     }
@@ -125,26 +121,41 @@ class HCHologramPlayerViewController: UIViewController {
         
         filterController.filterSelectedClosure = {[weak self] filter in
             guard let strongSelf = self else { return }
+            strongSelf.gpuMovieFile?.removeTarget(strongSelf.currentFilter)
+            strongSelf.currentFilter = filter
             strongSelf.gpuMovieFile?.addTarget(filter)
             
-            // remove current filter from all targets
-            // add all views to filter as target
+            for gpuView in [strongSelf.topView, strongSelf.bottomView, strongSelf.rightView, strongSelf.leftView] {
+                gpuView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+                filter.addTarget(gpuView)
+            }
+            strongSelf.orientViews()
+            strongSelf.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
-    func applySelectedFilter() {
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        closeButton.hidden = false
-    }
-    
     func closeButtonPressed() {
-        closeButton.hidden = true
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func orientViews() {
+        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+    }
 
+}
+
+extension UIView {
+    
+    /**
+     Rotate a view by specified degrees
+     
+     - parameter angle: angle in degrees
+     */
+    func rotate(angle angle: CGFloat) {
+        let radians = angle / 180.0 * CGFloat(M_PI)
+        let rotation = CGAffineTransformRotate(self.transform, radians);
+        self.transform = rotation
+    }
+    
 }

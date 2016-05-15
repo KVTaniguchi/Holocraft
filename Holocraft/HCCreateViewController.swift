@@ -15,9 +15,8 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     
     let takeVideoButton = UIButton(type: .Custom)
     let viewVideoButton = UIButton(type: .Custom)
-    let defaults = NSUserDefaults.standardUserDefaults()
     let videoImageView = UIImageView()
-    let key = "com.Holocraft.videos"
+    
     let takeVideoVC = HCTakePhotoViewController()
     var videoURL = NSURL()
     
@@ -37,8 +36,6 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         view.backgroundColor = UIColor.redColor()
         
         videoImageView.contentMode = .ScaleAspectFit
-        videoImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        videoImageView.layer.borderWidth = 1.0
         takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
         viewVideoButton.setTitle(NSLocalizedString("View Video", comment: ""), forState: .Normal)
         takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
@@ -63,7 +60,6 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        print(info)
         
         guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
             dismissViewControllerAnimated(true, completion: nil)
@@ -73,7 +69,6 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         if mediaType == "public.movie" {
             guard let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL else { return }
             videoURL = movieURL
-            print(movieURL)
             CameraEngineFileManager.saveVideo(movieURL, blockCompletion: { (success, error) -> (Void) in
                 let asset = AVURLAsset(URL: movieURL)
                 let generator = AVAssetImageGenerator(asset: asset)
@@ -81,7 +76,9 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
                 do {
                     let cgImg = try generator.copyCGImageAtTime(CMTimeMake(0, 1), actualTime: nil)
                     let image = UIImage(CGImage: cgImg)
-                    self.videoImageView.image = image
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.videoImageView.image = image
+                    })
                 }
                 catch {
                     print("Warning: failed to fetch image from video err \(error) asdfasd")
@@ -109,7 +106,7 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        viewVideoButton.enabled = !HCFaceFramesManager.shared.hcFaceObjects.isEmpty
+        viewVideoButton.enabled = !videoURL.absoluteString.isEmpty
     }
     
     func showVideo() {

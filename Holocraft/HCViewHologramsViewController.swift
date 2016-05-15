@@ -16,7 +16,6 @@ import Photos
 class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let chooseImagesFromPhotoLibButton = UIButton()
-    let playHologramButton = UIButton()
     
     let imagePicker = UIImagePickerController()
     
@@ -35,9 +34,10 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         imagePicker.sourceType = .PhotoLibrary
         
         chooseImagesFromPhotoLibButton.setTitle("Choose Video", forState: .Normal)
-        playHologramButton.setTitle("Play", forState: .Normal)
+        chooseImagesFromPhotoLibButton.setTitleColor(view.tintColor, forState: .Normal)
+        chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         
-        let stackView = UIStackView(arrangedSubviews: [chooseImagesFromPhotoLibButton, playHologramButton])
+        let stackView = UIStackView(arrangedSubviews: [chooseImagesFromPhotoLibButton])
         stackView.alignment = .Fill
         stackView.distribution = .EqualCentering
         stackView.axis = .Vertical

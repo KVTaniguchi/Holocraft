@@ -19,25 +19,15 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>VideoLoopView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>6B8C1225EE01F498C23EB811492D469D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>9829149F9B234BCAA601C6AC1BC6CD45</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B0E57D589F4B0DB8DCFFC2F951D3F53</key>
+		<key>A62BE32EE9FB88A8E3645680CFF2C67C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

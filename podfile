@@ -2,4 +2,3 @@ use_frameworks!
 
 pod 'CameraEngine'
 pod 'GPUImage'
-pod 'VideoLoopView'
