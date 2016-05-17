@@ -77,7 +77,6 @@ class HCHologramPlayerViewController: UIViewController {
         
         gpuMovieFile?.startProcessing()
         
-        
         let layoutGuide = UILayoutGuide()
         view.addLayoutGuide(layoutGuide)
         
@@ -100,8 +99,8 @@ class HCHologramPlayerViewController: UIViewController {
         
         layoutGuide.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor, constant: 0).active = true
         layoutGuide.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: 0).active = true
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[left(imgH)][guide][right(imgH)]|", options: [.AlignAllCenterY], metrics: metrics, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(vertPadding)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[left(imgH)][guide(90)][right(imgH)]", options: [.AlignAllCenterY], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(90)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
         
         for view in [leftView, rightView] {
             view.heightAnchor.constraintEqualToConstant(60).active = true
@@ -146,12 +145,6 @@ class HCHologramPlayerViewController: UIViewController {
 }
 
 extension UIView {
-    
-    /**
-     Rotate a view by specified degrees
-     
-     - parameter angle: angle in degrees
-     */
     func rotate(angle angle: CGFloat) {
         let radians = angle / 180.0 * CGFloat(M_PI)
         let rotation = CGAffineTransformRotate(self.transform, radians);

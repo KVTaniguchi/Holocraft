@@ -9,10 +9,7 @@
 /* Begin PBXBuildFile section */
 		1693EC6503045658833A33A9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C724DE101724795A43920D9 /* Pods.framework */; };
 		F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */; };
-		F6424D311CDED965002485D5 /* HCFaceObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */; };
-		F6424D331CDEF3DD002485D5 /* HCVideoPreviewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */; };
 		F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */; };
-		F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */; };
 		F69CA1F81CD8442700B5F054 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA1F71CD8442700B5F054 /* AppDelegate.swift */; };
 		F69CA2011CD8442700B5F054 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F69CA2001CD8442700B5F054 /* Assets.xcassets */; };
 		F69CA2041CD8442700B5F054 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F69CA2021CD8442700B5F054 /* LaunchScreen.storyboard */; };
@@ -26,10 +23,7 @@
 		352A5351786C81640C18718E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7C724DE101724795A43920D9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F631E26D1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCHologramPlayerViewController.swift; sourceTree = "<group>"; };
-		F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCFaceObjectManager.swift; sourceTree = "<group>"; };
-		F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCVideoPreviewerVC.swift; sourceTree = "<group>"; };
 		F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCFiltermanager.swift; sourceTree = "<group>"; };
-		F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCTakePhotoViewController.swift; sourceTree = "<group>"; };
 		F69CA1F41CD8442700B5F054 /* Holocraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holocraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F69CA1F71CD8442700B5F054 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F69CA2001CD8442700B5F054 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,11 +65,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F64C0A481CEA9F6700A112E0 /* Buy */ = {
+			isa = PBXGroup;
+			children = (
+				F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */,
+			);
+			name = Buy;
+			sourceTree = "<group>";
+		};
+		F64C0A491CEA9F7F00A112E0 /* Learn */ = {
+			isa = PBXGroup;
+			children = (
+				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
+			);
+			name = Learn;
+			sourceTree = "<group>";
+		};
 		F66629691CD97FC000D61821 /* Create */ = {
 			isa = PBXGroup;
 			children = (
 				F69CA20B1CD845A700B5F054 /* HCCreateViewController.swift */,
-				F666296A1CD9815700D61821 /* HCTakePhotoViewController.swift */,
+				F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */,
 			);
 			name = Create;
 			sourceTree = "<group>";
@@ -111,16 +121,13 @@
 			isa = PBXGroup;
 			children = (
 				F69CA1F71CD8442700B5F054 /* AppDelegate.swift */,
+				F64C0A491CEA9F7F00A112E0 /* Learn */,
+				F64C0A481CEA9F6700A112E0 /* Buy */,
 				F681160B1CE1685A00A9185D /* View */,
 				F66629691CD97FC000D61821 /* Create */,
-				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
-				F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */,
 				F69CA2001CD8442700B5F054 /* Assets.xcassets */,
 				F69CA2021CD8442700B5F054 /* LaunchScreen.storyboard */,
 				F69CA2051CD8442700B5F054 /* Info.plist */,
-				F6424D301CDED965002485D5 /* HCFaceObjectManager.swift */,
-				F6424D321CDEF3DD002485D5 /* HCVideoPreviewerVC.swift */,
-				F64C48A81CE81D6800BA25A2 /* HCFiltermanager.swift */,
 			);
 			path = Holocraft;
 			sourceTree = "<group>";
@@ -251,12 +258,9 @@
 				F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */,
 				F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */,
 				F69CA20C1CD845A700B5F054 /* HCCreateViewController.swift in Sources */,
-				F666296B1CD9815700D61821 /* HCTakePhotoViewController.swift in Sources */,
 				F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */,
-				F6424D311CDED965002485D5 /* HCFaceObjectManager.swift in Sources */,
 				F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */,
 				F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */,
-				F6424D331CDEF3DD002485D5 /* HCVideoPreviewerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

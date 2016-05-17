@@ -17,7 +17,6 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     let viewVideoButton = UIButton(type: .Custom)
     let videoImageView = UIImageView()
     
-    let takeVideoVC = HCTakePhotoViewController()
     var videoURL = NSURL()
     
     let imageController = UIImagePickerController()

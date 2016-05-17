@@ -33,7 +33,6 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
         
-        
         chooseImagesFromPhotoLibButton.setTitle("Choose Video", forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)

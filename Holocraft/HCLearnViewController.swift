@@ -15,8 +15,6 @@ class HCLearnViewController: UIViewController {
 
         title = "Learn"
         view.backgroundColor = UIColor(red: 41/255, green: 79/255, blue: 109/255, alpha: 1.0)
-        
-        
     }
 
 }
