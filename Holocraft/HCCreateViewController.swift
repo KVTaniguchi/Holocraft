@@ -21,12 +21,15 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     
     let imageController = UIImagePickerController()
     
+    let splashBackingView = UILabel()
     let createYourOwnLabel = UILabel()
     let createDetailText = UILabel()
     let showMeHowButton = UIButton()
     let startCreatingNowButton = UIButton()
     let dontShowThisAgainButton = UIButton()
     let xCloseButton = UIButton()
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,21 +52,46 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         viewVideoButton.addTarget(self, action: #selector(showVideo), forControlEvents: .TouchUpInside)
         viewVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
         
+        createYourOwnLabel.text = NSLocalizedString("Create your own Hologram", comment: "")
+        createDetailText.text = NSLocalizedString("Learn how to create your own hologram or get started right away with creating a new hologram", comment: "")
+        showMeHowButton.setTitle(NSLocalizedString("Show me how", comment: ""), forState: .Normal)
+        startCreatingNowButton.setTitle(NSLocalizedString("Start creating now", comment: ""), forState: .Normal)
+        dontShowThisAgainButton.setTitle(NSLocalizedString("Don't show this again", comment: ""), forState: .Normal)
+        
+        splashBackingView.backgroundColor = UIColor.clearColor()
+        
         for button in [takeVideoButton, viewVideoButton] {
             button.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
             button.setTitleColor(view.tintColor, forState: .Normal)
         }
         
-        let views = ["take": takeVideoButton, "view": viewVideoButton, "video": videoImageView]
-        for subView in [takeVideoButton, viewVideoButton, videoImageView] {
+        let views = ["take": takeVideoButton, "view": viewVideoButton, "video": videoImageView, "splash": splashBackingView, "createYourOwn": createYourOwnLabel, "createDetail": createDetailText, "show": showMeHowButton, "startNow": startCreatingNowButton, "dontShow": dontShowThisAgainButton, "xClose": xCloseButton]
+        
+        for subView in views.values {
             subView.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        for subView in [splashBackingView, xCloseButton] {
             view.addSubview(subView)
         }
-
-        videoImageView.heightAnchor.constraintEqualToConstant(UIScreen.mainScreen().bounds.width).active = true
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[take]-[view(take)]-|", options: [.AlignAllTop, .AlignAllBottom], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[video]-15-[take(44)]-44-|", options: [], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[video]|", options: [], metrics: nil, views: views))
+        
+        for subView in [createDetailText, createYourOwnLabel, showMeHowButton, startCreatingNowButton, dontShowThisAgainButton] {
+            splashBackingView.addSubview(subView)
+            splashBackingView.bringSubviewToFront(subView)
+        }
+        
+        for label in [createDetailText, createYourOwnLabel, showMeHowButton.titleLabel, startCreatingNowButton.titleLabel] {
+            if let lbl = label {
+                lbl.numberOfLines = 0
+                lbl.textAlignment = .Center
+            }
+        }
+        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[splash]-|", options: [], metrics: nil, views: views))
+        splashBackingView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[createYourOwn]-[createDetail]-[show]-[startNow]-[dontShow]-|", options: [.AlignAllLeft, .AlignAllRight], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[createYourOwn]-20-|", options: [], metrics: nil, views: views))
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
