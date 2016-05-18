@@ -16,9 +16,11 @@ class HCBuyViewController: UIViewController {
         super.viewDidLoad()
         
         blurredBackground.image = UIImage(named: "IMG_7430")
-        blurredBackground.frame = view.bounds
+        blurredBackground.translatesAutoresizingMaskIntoConstraints = false
         blurredBackground.makeBlurImage()
         view.addSubview(blurredBackground)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
 
         title = "Buy"
         view.backgroundColor = UIColor(red: 170/255, green: 121/255, blue: 57/255, alpha: 1.0)

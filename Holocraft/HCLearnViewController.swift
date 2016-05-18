@@ -16,9 +16,11 @@ class HCLearnViewController: UIViewController {
         super.viewDidLoad()
         
         blurredBackground.image = UIImage(named: "IMG_1292")
-        blurredBackground.frame = view.bounds
+        blurredBackground.translatesAutoresizingMaskIntoConstraints = false
         blurredBackground.makeBlurImage()
         view.addSubview(blurredBackground)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
 
         title = "Learn"
         view.backgroundColor = UIColor(red: 41/255, green: 79/255, blue: 109/255, alpha: 1.0)

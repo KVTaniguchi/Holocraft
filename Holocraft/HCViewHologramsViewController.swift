@@ -30,9 +30,11 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         }
         
         blurredBackground.image = UIImage(named: "IMG_0685")
-        blurredBackground.frame = view.bounds
+        blurredBackground.translatesAutoresizingMaskIntoConstraints = false
         blurredBackground.makeBlurImage()
         view.addSubview(blurredBackground)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
         
         view.backgroundColor = UIColor(red: 52/255, green: 52/255, blue: 119/255, alpha: 1.0)
         imagePicker.delegate = self

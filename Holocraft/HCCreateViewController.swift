@@ -30,9 +30,11 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         super.viewDidLoad()
         
         blurredBackground.image = UIImage(named: "IMG_0667")
-        blurredBackground.frame = view.bounds
+        blurredBackground.translatesAutoresizingMaskIntoConstraints = false
         blurredBackground.makeBlurImage()
         view.addSubview(blurredBackground)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
         
         imageController.sourceType = .Camera
         if let allmedia = UIImagePickerController.availableMediaTypesForSourceType(.Camera) {
