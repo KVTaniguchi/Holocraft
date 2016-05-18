@@ -16,6 +16,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     
     let chooseImagesFromPhotoLibButton = UIButton()
     let instructionalLabel = UILabel()
+    let blurredBackground = UIImageView()
     
     let imagePicker = UIImagePickerController()
     
@@ -28,6 +29,11 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             imagePicker.mediaTypes = allmedia
         }
         
+        blurredBackground.image = UIImage(named: "IMG_0685")
+        blurredBackground.frame = view.bounds
+        blurredBackground.makeBlurImage()
+        view.addSubview(blurredBackground)
+        
         view.backgroundColor = UIColor(red: 52/255, green: 52/255, blue: 119/255, alpha: 1.0)
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -36,20 +42,19 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         chooseImagesFromPhotoLibButton.setTitle("Choose Video", forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-        chooseImagesFromPhotoLibButton.backgroundColor = UIColor.darkGrayColor()
-        
-        let stackView = UIStackView(arrangedSubviews: [chooseImagesFromPhotoLibButton])
-        stackView.alignment = .Fill
-        stackView.distribution = .EqualCentering
-        stackView.axis = .Vertical
-        stackView.spacing = 50
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
-        stackView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor, constant: 0).active = true
-        stackView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: 0).active = true
-        
+        chooseImagesFromPhotoLibButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
+        chooseImagesFromPhotoLibButton.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
+        chooseImagesFromPhotoLibButton.layer.cornerRadius = 2
         chooseImagesFromPhotoLibButton.addTarget(self, action: #selector(chooseImgButtonPressed), forControlEvents: .TouchUpInside)
+        
+        chooseImagesFromPhotoLibButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(chooseImagesFromPhotoLibButton)
+        
+        chooseImagesFromPhotoLibButton.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+        chooseImagesFromPhotoLibButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
+        chooseImagesFromPhotoLibButton.widthAnchor.constraintEqualToConstant(200).active = true
+        chooseImagesFromPhotoLibButton.heightAnchor.constraintEqualToConstant(60).active = true
+
     }
     
     func chooseImgButtonPressed() {
@@ -83,5 +88,18 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             self.presentViewController(player, animated: true, completion: nil)
         }
     }
+}
+
+extension UIImageView{
+    
+    func makeBlurImage() {
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+        addSubview(blurEffectView)
+    }
+    
 }
 
