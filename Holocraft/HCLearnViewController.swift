@@ -11,6 +11,10 @@ import UIKit
 class HCLearnViewController: UIViewController {
     
     let blurredBackground = UIImageView()
+    
+    let whatIsAHologramView = HCLearningPanelView()
+    let tipsView = HCLearningPanelView()
+    let purchaseView = HCLearningPanelView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,25 @@ class HCLearnViewController: UIViewController {
 
         title = "Learn"
         view.backgroundColor = UIColor(red: 41/255, green: 79/255, blue: 109/255, alpha: 1.0)
+        
+        // what
+        whatIsAHologramView.headerText.text = NSLocalizedString("What is a Hologram", comment: "")
+        whatIsAHologramView.detailText.text = NSLocalizedString("A hologram is....", comment: "")
+        // tips
+        tipsView.headerText.text = NSLocalizedString("Tips for making a great hologram", comment: "")
+        tipsView.detailText.text = NSLocalizedString("To make a great hologram...", comment: "")
+        // purchase
+        purchaseView.headerText.text = NSLocalizedString("Purchasing a hologram", comment: "")
+        let views = ["what": whatIsAHologramView, "tips": tipsView, "pur": purchaseView]
+        
+        views.values.forEach { (view) in
+            view.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(view)
+        }
+        
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[what(100)]-[tips(100)]-[pur(100)]", options: [.AlignAllLeft, .AlignAllRight], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-24-[what]-24-|", options: [], metrics: nil, views: views))
+        tipsView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
     }
 }
 
@@ -37,6 +60,11 @@ class HCLearningPanelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        headerText.textColor = UIColor.whiteColor()
+        detailText.textColor = UIColor.whiteColor()
+        headerText.font = UIFont(name: "Avenir-Bold", size: 20)
+        detailText.font = UIFont(name: "Avenir", size: 14)
+        
         let views = ["image": imageView, "header": headerText, "detail": detailText, "disc": disclosureView]
         
         for subView in views.values {
@@ -44,10 +72,17 @@ class HCLearningPanelView: UIView {
             addSubview(subView)
         }
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image(100)][header][disc(50)]|", options: [.AlignAllTop], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image(100)]|", options: [], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[disc(100)]|", options: [], metrics: nil, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[header][detail]|", options: [], metrics: nil, views: views))
+        if let image = UIImage(named: "forward-50")?.imageWithRenderingMode(.AlwaysTemplate) {
+            disclosureView.image = image
+            disclosureView.tintColor = UIColor.whiteColor()
+        }
+        
+        backgroundColor = UIColor(white: 0.3, alpha: 0.4)
+        
+        disclosureView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image(44)]-[header]-[disc(40)]|", options: [], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[image]|", options: [], metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[header(30)][detail]-|", options: [.AlignAllLeft, .AlignAllRight], metrics: nil, views: views))
     }
     
     func configure(img: UIImage, header: String, detail: String) {

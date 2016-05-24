@@ -29,7 +29,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
             imagePicker.mediaTypes = allmedia
         }
         
-        blurredBackground.image = UIImage(named: "IMG_0685")
+        blurredBackground.image = UIImage(named: "IMG_7430")
         blurredBackground.translatesAutoresizingMaskIntoConstraints = false
         blurredBackground.makeBlurImage()
         view.addSubview(blurredBackground)
