@@ -14,7 +14,6 @@ import CameraEngine
 class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let takeVideoButton = UIButton(type: .Custom)
-    let viewVideoButton = UIButton(type: .Custom)
     let videoImageView = UIImageView()
     
     let blurredBackground = UIImageView()
@@ -25,9 +24,13 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
     
     let splashBackingView = HCCreateSplashView()
     let defaults = NSUserDefaults.standardUserDefaults()
+    
+    let dontShowAgainkey = "dontShowAgainPressed"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Create"
         
         blurredBackground.image = UIImage(named: "IMG_0667")
         blurredBackground.translatesAutoresizingMaskIntoConstraints = false
@@ -43,29 +46,21 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         imageController.allowsEditing = true
         imageController.delegate = self
         
-        splashBackingView.startCreatingNowButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
-
-        title = "Create"
-        view.backgroundColor = UIColor(red: 170/255, green: 142/255, blue: 57/255, alpha: 1.0)
-        
-        videoImageView.contentMode = .ScaleAspectFit
-        takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
-        viewVideoButton.setTitle(NSLocalizedString("View Video", comment: ""), forState: .Normal)
-        takeVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
-        takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
-        viewVideoButton.addTarget(self, action: #selector(showVideo), forControlEvents: .TouchUpInside)
-        viewVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
-        
-        for button in [takeVideoButton, viewVideoButton] {
-            button.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
-            button.setTitleColor(view.tintColor, forState: .Normal)
-            button.backgroundColor = UIColor.redColor()
+        guard defaults.boolForKey(dontShowAgainkey) == false else {
+            showNonSplashView()
+            return
         }
         
+        showSplashView()
+    }
+    
+    func showSplashView() {
+        splashBackingView.startCreatingNowButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
         splashBackingView.backgroundColor = UIColor.whiteColor()
         splashBackingView.layer.cornerRadius = 2
+        splashBackingView.dontShowThisAgainButton.addTarget(self, action: #selector(dontShowAgainPressed), forControlEvents: .TouchUpInside)
         
-        let views = ["splash": splashBackingView, "take": takeVideoButton, "view": viewVideoButton]
+        let views = ["splash": splashBackingView]
         
         for subView in views.values {
             subView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,6 +70,33 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[splash]-30-|", options: [], metrics: nil, views: views))
         splashBackingView.heightAnchor.constraintEqualToConstant(300).active = true
         splashBackingView.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+    }
+    
+    func dontShowAgainPressed() {
+        defaults.setBool(true, forKey: dontShowAgainkey)
+        splashBackingView.removeFromSuperview()
+        showNonSplashView()
+    }
+    
+    func showNonSplashView() {
+        videoImageView.contentMode = .ScaleAspectFit
+        takeVideoButton.setTitle(NSLocalizedString("Create Video", comment: ""), forState: .Normal)
+        takeVideoButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
+        takeVideoButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+        takeVideoButton.addTarget(self, action: #selector(takeVideoBtnPressed), forControlEvents: .TouchUpInside)
+        
+        for button in [takeVideoButton] {
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            button.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
+            view.addSubview(button)
+        }
+        
+        takeVideoButton.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor).active = true
+        takeVideoButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
+        takeVideoButton.widthAnchor.constraintEqualToConstant(200).active = true
+        takeVideoButton.heightAnchor.constraintEqualToConstant(60).active = true
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -119,12 +141,6 @@ class HCCreateViewController: UIViewController, UIImagePickerControllerDelegate,
         }
         
         dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        viewVideoButton.enabled = !videoURL.absoluteString.isEmpty
     }
     
     func showVideo() {
@@ -182,12 +198,17 @@ class HCCreateSplashView: UIView {
         }
         
         dontShowThisAgainButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        dontShowThisAgainButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[createYourOwn(50)]-[createDetail]-20-[show(44)]-10-[startNow(show)]-20-[dontShow(20)]-|", options: [.AlignAllCenterX], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[createYourOwn]-20-|", options: [], metrics: nil, views: views))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[createDetail]-20-|", options: [], metrics: nil, views: views))
         showMeHowButton.widthAnchor.constraintEqualToConstant(200).active = true
         startCreatingNowButton.widthAnchor.constraintEqualToConstant(200).active = true
+    }
+    
+    func dontShowAgainPressed() {
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

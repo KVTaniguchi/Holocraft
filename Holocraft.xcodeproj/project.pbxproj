@@ -17,6 +17,7 @@
 		F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */; };
 		F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */; };
 		F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */; };
+		F6A0E39D1D0B30B300D11AB3 /* HCWhatIsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		F69CA20D1CD845B800B5F054 /* HCViewHologramsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCViewHologramsViewController.swift; sourceTree = "<group>"; };
 		F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCLearnViewController.swift; sourceTree = "<group>"; };
 		F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCBuyViewController.swift; sourceTree = "<group>"; };
+		F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCWhatIsVC.swift; sourceTree = "<group>"; };
 		FAA9B097F00C4C16C30486EB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
+				F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */,
 			);
 			name = Learn;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */,
 				F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */,
 				F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */,
+				F6A0E39D1D0B30B300D11AB3 /* HCWhatIsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

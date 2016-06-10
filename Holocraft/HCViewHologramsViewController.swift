@@ -36,7 +36,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blur]|", options: [], metrics: nil, views: ["blur":blurredBackground]))
         
-        view.backgroundColor = UIColor(red: 52/255, green: 52/255, blue: 119/255, alpha: 1.0)
+        view.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
@@ -45,7 +45,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         chooseImagesFromPhotoLibButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
-        chooseImagesFromPhotoLibButton.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
+        chooseImagesFromPhotoLibButton.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
         chooseImagesFromPhotoLibButton.layer.cornerRadius = 2
         chooseImagesFromPhotoLibButton.addTarget(self, action: #selector(chooseImgButtonPressed), forControlEvents: .TouchUpInside)
         
@@ -56,7 +56,6 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         chooseImagesFromPhotoLibButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).active = true
         chooseImagesFromPhotoLibButton.widthAnchor.constraintEqualToConstant(200).active = true
         chooseImagesFromPhotoLibButton.heightAnchor.constraintEqualToConstant(60).active = true
-
     }
     
     func chooseImgButtonPressed() {
