@@ -1,6 +1,5 @@
 use_frameworks!
 
 target "Holocraft" do
-	pod 'CameraEngine'
 	pod 'GPUImage'
 end

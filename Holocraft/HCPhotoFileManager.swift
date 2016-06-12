@@ -1,9 +1,9 @@
 //
-//  CameraEngineFileManager.swift
-//  CameraEngine2
+//  HCPhotoFileManager.swift
+//  Holocraft
 //
-//  Created by Remi Robert on 11/02/16.
-//  Copyright © 2016 Remi Robert. All rights reserved.
+//  Created by Kevin Taniguchi on 6/11/16.
+//  Copyright © 2016 Taniguchi. All rights reserved.
 //
 
 import UIKit
@@ -66,3 +66,4 @@ public class CameraEngineFileManager {
         return NSURL(fileURLWithPath: self.appendPath(self.temporaryPath(), pathFile: file))
     }
 }
+

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "373AE1C34E706F9561F9D718E310BE4D"
+               BlueprintIdentifier = "9DBB143F1F55BF402CFF5814432A7816"
                BuildableName = "Pods_Holocraft.framework"
                BlueprintName = "Pods-Holocraft"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "373AE1C34E706F9561F9D718E310BE4D"
+            BlueprintIdentifier = "9DBB143F1F55BF402CFF5814432A7816"
             BuildableName = "Pods_Holocraft.framework"
             BlueprintName = "Pods-Holocraft"
             ReferencedContainer = "container:Pods.xcodeproj">
