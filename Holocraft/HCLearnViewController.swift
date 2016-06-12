@@ -25,7 +25,8 @@ class HCLearnViewController: UIViewController {
         }
         
         tipsView.selectionAction = {
-            
+            let tipsVC = HCTipsViewController()
+            self.navigationController?.pushViewController(tipsVC, animated: true)
         }
         
         purchaseView.selectionAction = {

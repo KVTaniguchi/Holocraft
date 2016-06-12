@@ -19,6 +19,7 @@
 		F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */; };
 		F6A0E39D1D0B30B300D11AB3 /* HCWhatIsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */; };
 		F6A95C891D0CFFE900FCB415 /* HCPhotoFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A95C881D0CFFE900FCB415 /* HCPhotoFileManager.swift */; };
+		F6A95C8B1D0D1A8600FCB415 /* HCTipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A95C8A1D0D1A8600FCB415 /* HCTipsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		F69CA2111CD845DC00B5F054 /* HCBuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCBuyViewController.swift; sourceTree = "<group>"; };
 		F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCWhatIsVC.swift; sourceTree = "<group>"; };
 		F6A95C881D0CFFE900FCB415 /* HCPhotoFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCPhotoFileManager.swift; sourceTree = "<group>"; };
+		F6A95C8A1D0D1A8600FCB415 /* HCTipsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCTipsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			children = (
 				F69CA20F1CD845C400B5F054 /* HCLearnViewController.swift */,
 				F6A0E39C1D0B30B300D11AB3 /* HCWhatIsVC.swift */,
+				F6A95C8A1D0D1A8600FCB415 /* HCTipsViewController.swift */,
 			);
 			name = Learn;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				F631E26E1CE7D41700D0B0A8 /* HCHologramPlayerViewController.swift in Sources */,
 				F69CA2121CD845DC00B5F054 /* HCBuyViewController.swift in Sources */,
 				F69CA20C1CD845A700B5F054 /* HCCreateViewController.swift in Sources */,
+				F6A95C8B1D0D1A8600FCB415 /* HCTipsViewController.swift in Sources */,
 				F69CA2101CD845C400B5F054 /* HCLearnViewController.swift in Sources */,
 				F69CA20E1CD845B800B5F054 /* HCViewHologramsViewController.swift in Sources */,
 				F64C48A91CE81D6800BA25A2 /* HCFiltermanager.swift in Sources */,
