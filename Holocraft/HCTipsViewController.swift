@@ -29,7 +29,7 @@ class HCTipsViewController: UIViewController {
         hologramImage.contentMode = .ScaleAspectFit
         view.addSubview(hologramImage)
         
-        tipsText.text = "Place the Pepper gram projector, small side down, between all four images."
+        tipsText.text = "Place the Pepper gram projector, small side down, between all four images.\n\nWhen creating your own videos, use a black background."
         
         let views = ["detail": tipsText, "img": hologramImage]
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-40-[detail]-40-|", options: [], metrics: nil, views: views))

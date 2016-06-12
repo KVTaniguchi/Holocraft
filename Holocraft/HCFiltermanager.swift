@@ -13,7 +13,7 @@ class HCFiltermanager: UITableViewController {
     
     let filters = [GPUImageToonFilter(), GPUImageRGBFilter(), GPUImagePixellateFilter(), GPUImagePolkaDotFilter(), GPUImageGrayscaleFilter(), GPUImageSketchFilter(), GPUImageGaussianBlurFilter(), GPUImageZoomBlurFilter(), GPUImageSwirlFilter(), GPUImagePinchDistortionFilter(), GPUImageStretchDistortionFilter(), GPUImageMosaicFilter()]
     
-    let titles = ["Cartoon", "RGB", "Pixellaet", "Polka Dots", "Gray", "Sketch", "Gauss Blur", "Zoom", "Swirl", "Pinch", "Stretch", "Mosaic"]
+    let titles = ["Cartoon", "RGB", "Pixellate", "Polka Dots", "Gray", "Sketch", "Gauss Blur", "Zoom", "Swirl", "Pinch", "Stretch", "Mosaic"]
     
     var filterSelectedClosure: (GPUImageFilter -> Void)?
     

@@ -45,7 +45,7 @@ class HCLearnViewController: UIViewController {
         
         // what
         whatIsAHologramView.headerText.text = NSLocalizedString("What is a Hologram?", comment: "")
-        whatIsAHologramView.detailText.text = NSLocalizedString("A hologram is....", comment: "")
+        whatIsAHologramView.detailText.text = NSLocalizedString("Learn about the science behind holograms!", comment: "")
         // tips
         tipsView.headerText.text = NSLocalizedString("Tips for making a great hologram", comment: "")
         tipsView.detailText.text = NSLocalizedString("To make a great hologram...", comment: "")
