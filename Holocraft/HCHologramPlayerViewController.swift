@@ -7,27 +7,26 @@
 //
 
 import UIKit
-import GPUImage
+import Gifu
 
 class HCHologramPlayerViewController: UIViewController {
     
     private var image: UIImage?
-    private var movieURL: NSURL?
     
-    var leftView = GPUImageView()
-    var rightView = GPUImageView()
-    var topView = GPUImageView()
-    var bottomView = GPUImageView()
+    private var leftView = AnimatableImageView()
+    private var rightView = AnimatableImageView()
+    private var topView = AnimatableImageView()
+    private var bottomView = AnimatableImageView()
     
     let closeButton = UIButton()
-    let filterButton = UIButton()
     
-    var currentFilter: GPUImageFilter?
-    
-    convenience init(img: UIImage) {
+    convenience init(data: NSData) {
         self.init()
         
-        image = img
+        leftView.animateWithImageData(data)
+        rightView.animateWithImageData(data)
+        topView.animateWithImageData(data)
+        bottomView.animateWithImageData(data)
     }
 
     override func viewDidLoad() {
@@ -35,7 +34,7 @@ class HCHologramPlayerViewController: UIViewController {
 
         view.backgroundColor = UIColor.blackColor()
         
-        for btn in [closeButton, filterButton] {
+        for btn in [closeButton] {
             btn.translatesAutoresizingMaskIntoConstraints = false
             btn.setTitleColor(view.tintColor, forState: .Normal)
             btn.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
@@ -47,34 +46,8 @@ class HCHologramPlayerViewController: UIViewController {
         closeButton.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant:  20).active = true
         closeButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -20).active = true
         
-        filterButton.setTitle("Apply a Filter", forState: .Normal)
-        filterButton.addTarget(self, action: #selector(filterButtonPressed), forControlEvents: .TouchUpInside)
-        filterButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -20).active = true
-        filterButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: -20).active = true
-        
-        guard let url = movieURL else {
-            setUpImageViews()
-            return }
-        
-        gpuMovieFile = GPUImageMovie(URL: url)
-        gpuMovieFile?.shouldRepeat = true
-        let defaultFilter = GPUImageFilter()
-        currentFilter = defaultFilter
-        gpuMovieFile?.addTarget(defaultFilter)
-        for gpuView in [leftView, rightView, topView, bottomView] {
-            gpuView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
-            defaultFilter.addTarget(gpuView)
-        }
-        
-        gpuMovieFile?.startProcessing()
-        
         let layoutGuide = UILayoutGuide()
         view.addLayoutGuide(layoutGuide)
-        
-        rightView.rotate(angle: 180)
-        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
-        bottomView.rotate(angle: 180)
-        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
         
         let views = ["left": leftView, "right": rightView, "top": topView, "bot": bottomView, "guide": layoutGuide]
         
@@ -101,38 +74,9 @@ class HCHologramPlayerViewController: UIViewController {
         }
     }
     
-    func setUpImageViews()  {
-        
-    }
-    
-    func filterButtonPressed() {
-        let filterController = HCFiltermanager()
-        presentViewController(filterController, animated: true, completion: nil)
-        
-        filterController.filterSelectedClosure = {[weak self] filter in
-            guard let strongSelf = self else { return }
-            strongSelf.gpuMovieFile?.removeTarget(strongSelf.currentFilter)
-            strongSelf.currentFilter = filter
-            strongSelf.gpuMovieFile?.addTarget(filter)
-            
-            for gpuView in [strongSelf.topView, strongSelf.bottomView, strongSelf.rightView, strongSelf.leftView] {
-                gpuView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
-                filter.addTarget(gpuView)
-            }
-            strongSelf.orientViews()
-            strongSelf.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
     func closeButtonPressed() {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    func orientViews() {
-        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
-        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
-    }
-
 }
 
 extension UIView {

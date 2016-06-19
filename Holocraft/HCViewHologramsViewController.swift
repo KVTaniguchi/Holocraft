@@ -37,7 +37,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         
         view.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
         imagePicker.delegate = self
-        imagePicker.allowsEditing = true
+        imagePicker.allowsEditing = false
         imagePicker.sourceType = .PhotoLibrary
         
         chooseImagesFromPhotoLibButton.setTitle("Choose Gif", forState: .Normal)
@@ -63,30 +63,18 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        let player: HCHologramPlayerViewController
+        guard let url = info[UIImagePickerControllerReferenceURL] as? NSURL else { return }
+        guard let imageAsset = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil).firstObject as? PHAsset else { return }
         
-        guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
-            picker.dismissViewControllerAnimated(true, completion: nil)
-            return
-        }
-        
-        if mediaType == "public.movie" {
-            guard let movieURL = info[UIImagePickerControllerReferenceURL] as? NSURL else { return }
-            player = HCHologramPlayerViewController(movie: movieURL)
-        }
-        else {
-            let imageKeys = Set([UIImagePickerControllerEditedImage, UIImagePickerControllerOriginalImage, UIImagePickerControllerCropRect, UIImagePickerControllerMediaMetadata])
-            let allKeysSet = Set(info.keys)
-            let intersect = imageKeys.intersect(allKeysSet)
+        PHImageManager.defaultManager().requestImageDataForAsset(imageAsset, options: nil) { (data, dataUTI, orientation, info) in
+            guard let imgData = data else { return }
             
-            guard let imageKey = intersect.first, image = info[imageKey] as? UIImage else { return }
-            // process the image for hologram
-            player = HCHologramPlayerViewController(img: image)
+            picker.dismissViewControllerAnimated(true) {
+                let playerController = HCHologramPlayerViewController(data: imgData)
+                self.presentViewController(playerController, animated: true, completion: nil)
+            }
         }
         
-        picker.dismissViewControllerAnimated(true) {
-            self.presentViewController(player, animated: true, completion: nil)
-        }
     }
 }
 
