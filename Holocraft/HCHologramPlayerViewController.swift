@@ -27,6 +27,17 @@ class HCHologramPlayerViewController: UIViewController {
         rightView.animateWithImageData(data)
         topView.animateWithImageData(data)
         bottomView.animateWithImageData(data)
+        
+        leftView.rotate(angle: -90)
+        rightView.rotate(angle: 90)
+//        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+        bottomView.rotate(angle: 180)
+//        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+        
+//        rightView.rotate(angle: 180)
+//        bottomView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
+//        bottomView.rotate(angle: 180)
+//        topView.setInputRotation(kGPUImageRotateRight, atIndex: 0)
     }
 
     override func viewDidLoad() {
@@ -63,14 +74,14 @@ class HCHologramPlayerViewController: UIViewController {
         
         layoutGuide.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor, constant: 0).active = true
         layoutGuide.centerYAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: 0).active = true
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[left(imgH)][guide(90)][right(imgH)]", options: [.AlignAllCenterY], metrics: metrics, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(90)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[left(70)][guide(150)][right(70)]", options: [.AlignAllCenterY], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[top(imgH)][guide(130)][bot(imgH)]", options: [.AlignAllCenterX], metrics: metrics, views: views))
         
         for view in [leftView, rightView] {
-            view.heightAnchor.constraintEqualToConstant(60).active = true
+            view.heightAnchor.constraintEqualToConstant(100).active = true
         }
         for view in [topView, bottomView] {
-            view.widthAnchor.constraintEqualToConstant(60).active = true
+            view.widthAnchor.constraintEqualToConstant(70).active = true
         }
     }
     
