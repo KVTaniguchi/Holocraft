@@ -22,21 +22,12 @@ class HCHologramPlayerViewController: UIViewController {
     let closeButton = UIButton()
     let filterButton = UIButton()
     
-    var gpuMovieFile: GPUImageMovie?
     var currentFilter: GPUImageFilter?
     
     convenience init(img: UIImage) {
         self.init()
         
         image = img
-    }
-    
-    convenience init(movie: NSURL) {
-        self.init()
-        
-        gpuMovieFile = GPUImageMovie(URL: movie)
-        
-        movieURL = movie
     }
 
     override func viewDidLoad() {
