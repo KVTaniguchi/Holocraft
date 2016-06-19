@@ -40,7 +40,7 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
         
-        chooseImagesFromPhotoLibButton.setTitle("Choose Video", forState: .Normal)
+        chooseImagesFromPhotoLibButton.setTitle("Choose Gif", forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         chooseImagesFromPhotoLibButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         chooseImagesFromPhotoLibButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
