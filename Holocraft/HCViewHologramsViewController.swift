@@ -78,16 +78,3 @@ class HCViewHologramsViewController: UIViewController, UIImagePickerControllerDe
     }
 }
 
-extension UIImageView{
-    
-    func makeBlurImage() {
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = bounds
-        
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
-        addSubview(blurEffectView)
-    }
-    
-}
-
