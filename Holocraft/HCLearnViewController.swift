@@ -50,6 +50,7 @@ class HCLearnViewController: UIViewController {
         tipsView.headerText.text = NSLocalizedString("Tips for making a great hologram", comment: "")
         tipsView.detailText.text = NSLocalizedString("To make a great hologram...", comment: "")
         
+        purchaseView.imageView.image = UIImage(named: "Holocraft_Kids")
         purchaseView.headerText.text = NSLocalizedString("Purchasing a hologram", comment: "")
         purchaseView.detailText.text = NSLocalizedString("Get your own pepper's ghost by visiting Laser Classroom", comment: "")
         let views = ["what": whatIsAHologramView, "tips": tipsView, "pur": purchaseView]
@@ -95,7 +96,7 @@ class HCLearningPanelView: UIView {
         imageView.contentMode = .ScaleToFill
         
         let views = ["image": imageView, "header": headerText, "detail": detailText, "disc": disclosureView]
-        let metrics = ["imgW": screenWidth/5, "imgH": screenWidth/7]
+        let metrics = ["imgW": screenWidth/5.5, "imgH": screenWidth/7]
         
         for subView in views.values {
             subView.translatesAutoresizingMaskIntoConstraints = false
@@ -112,8 +113,8 @@ class HCLearningPanelView: UIView {
         disclosureView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
         imageView.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[image(imgH)]", options: [], metrics: metrics, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[image(imgW)]-[header]-[disc(40)]|", options: [], metrics: metrics, views: views))
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[header(>=30@750)][detail]-|", options: [.AlignAllLeft, .AlignAllRight], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[image(imgW)]-[header]-[disc(40)]|", options: [], metrics: metrics, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[header(<=50@750)][detail]-|", options: [.AlignAllLeft, .AlignAllRight], metrics: metrics, views: views))
     }
     
     func tapAction() {
